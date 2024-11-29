@@ -22,6 +22,8 @@ Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestF
 Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
 Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
 Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
+Route::get('/ganti-password', [UserController::class, 'showChangePasswordForm'])->name('ganti-password');
+
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -33,15 +35,12 @@ Route::get('/', function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('forgot-password/change-password', [ForgotPasswordController::class, 'showChangePasswordForm'])->name('ganti-password');
-    Route::post('forgot-password/change-password', [ForgotPasswordController::class, 'changePassword'])->name("ubah-password");
-
 
     // Add more routes that require authentication here
 });
 
 Route::get('/karyawan', [KaryawanController::class, 'index'])->name('karyawan.index');
-Route::get('karyawan/edit', [KaryawanController::class, 'edit'])->name('karyawan.edit');
+Route::get('karyawan/{id}/edit', [KaryawanController::class, 'edit'])->name('karyawan.edit');
 Route::get('karyawan/create', [KaryawanController::class, 'create'])->name('karyawan.create');
 Route::delete('/karyawan/{karyawan}', [KaryawanController::class, 'destroy'])->name('karyawan.destroy');
 Route::get('/karyawan/create', [KaryawanController::class, 'create'])->name('karyawan.create');
@@ -53,5 +52,8 @@ Route::post('/pelanggan', [PelangganController::class, 'store'])->name('pelangga
 Route::get('/pelanggan/{id}/edit', [PelangganController::class, 'edit'])->name('pelanggan.edit');
 Route::put('/pelanggan/{id}', [PelangganController::class, 'update'])->name('pelanggan.update');
 Route::delete('/pelanggan/{id}', [PelangganController::class, 'destroy'])->name('pelanggan.destroy');
+
+
+
 
 
